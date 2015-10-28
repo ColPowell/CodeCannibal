@@ -377,6 +377,8 @@ public class JarOpener {
                 }
             }
         }
+        if(packageName.equals("package "))
+            return "";
         return packageName;
     }
 
@@ -443,39 +445,78 @@ public class JarOpener {
 
 
     public List<String> getPrettyByteCodeList(String className){
-        List<String> prettyByteCode = new ArrayList<String>();
-        for(ClassBlock cn : classBlocks.values()){
-            if(!cn.getName().contains(className))
-                continue;
-           prettyByteCode.add(getPackageName(cn.getNode()) + "\n\n");
-
-            prettyByteCode.add(modifiers(cn.getAccess()) + " class " + cn.getName().split("/")[cn.getName().split("/").length - 1] + " " + (cn.getNode().outerClass != null ? "extends " + cn.getNode().outerClass : "") + " " + ArrayUtil.arrayToString(cn.getNode().interfaces.toArray(new String[cn.getNode().interfaces.size()])) + "{\n");
-//            System.out.println("Class getName: " + cn.getName);
-            for(MethodBlock mb : cn.getMethods()){
-                boolean inLabel = false;
-                prettyByteCode.add("    " + modifiers(mb.getAccess()) + " " + mb.getName() + "(" + mb.getPrettyParameters() + "){ //" + mb.getDescription() + ":" + mb.getNode().signature + "\n");
-
-                for(AbstractInsnNode ain : mb.getInstructions()){
-                    if(ain instanceof LineNumberNode || ain instanceof FrameNode)
-                        continue;
-                    if(ain instanceof LabelNode){
-                        if(inLabel){
-                            prettyByteCode.add("        }\n");
-                        }
-                        else{
-                            inLabel = true;
-                        }
-                        prettyByteCode.add("        " + ain.toString() + "\n");
-
-                    }
-                    else
-                        prettyByteCode.add("            " + ain.toString() + "\n");
-                }
-                prettyByteCode.add("        }\n");
-                prettyByteCode.add("    }\n");
-            }
-            prettyByteCode.add("}\n");
+        ClassBlock cn = classBlocks.get(className);
+        System.out.println(cn.getMethods().size());
+        List<List<String>> listoflists = new ArrayList<>();
+        for(int i = 0; i < cn.getMethods().size()+1; i++){
+            listoflists.add(null);
         }
+        System.out.println(listoflists.size());
+        List<String> prettyByteCode1 = new ArrayList<String>();
+
+        //for(ClassBlock cn : classBlocks.values()){
+          //  if(!cn.getName().contains(className))
+            //    continue;
+           prettyByteCode1.add(getPackageName(cn.getNode()) + "\n\n");
+
+            prettyByteCode1.add(modifiers(cn.getAccess()) + " class " + cn.getName().split("/")[cn.getName().split("/").length - 1] + " " + (cn.getNode().outerClass != null ? "extends " + cn.getNode().outerClass : "") + " " + ArrayUtil.arrayToString(cn.getNode().interfaces.toArray(new String[cn.getNode().interfaces.size()])) + "{\n");
+//            System.out.println("Class getName: " + cn.getName);
+        listoflists.add(0,prettyByteCode1);
+        List<Thread> threads = new ArrayList<>();
+        //String[] methodStrings
+        int methodsPlace = 1;
+        for(MethodBlock mb : cn.getMethods()){
+            int methodsPlace2 = methodsPlace;
+                Runnable runMethodStuff = new Runnable(){
+                    public void run(){
+                        int realMethodsPlace = methodsPlace2;
+                        List<String> prettyByteCode = new ArrayList<String>();
+                        System.out.println("Running method: " + mb.getName() + " at " + realMethodsPlace);
+                        boolean inLabel = false;
+                        prettyByteCode.add("    " + modifiers(mb.getAccess()) + " " + mb.getName() + "(" + mb.getPrettyParameters() + "){ //" + mb.getDescription() + ":" + mb.getNode().signature + "\n");
+
+                        for(AbstractInsnNode ain : mb.getInstructions()){
+                            if(ain instanceof LineNumberNode || ain instanceof FrameNode)
+                                continue;
+                            if(ain instanceof LabelNode){
+                                if(inLabel){
+                                    prettyByteCode.add("        }\n");
+                                }
+                                else{
+                                    inLabel = true;
+                                }
+                                prettyByteCode.add("        " + ain.toString() + "\n");
+
+                            }
+                            else
+                                prettyByteCode.add("            " + ain.toString() + "\n");
+                        }
+                        prettyByteCode.add("        }\n");
+                        prettyByteCode.add("    }\n");
+
+                        listoflists.add(realMethodsPlace, prettyByteCode);
+                    }
+                };
+                Thread methodThread = new Thread(runMethodStuff);
+                threads.add(methodThread);
+                methodThread.start();
+                methodsPlace++;
+            }
+        //}
+        while(!threads.isEmpty()){
+            if(!threads.get(0).isAlive()){
+                threads.remove(0);
+            }
+        }
+        List<String> prettyByteCode = new ArrayList<>();
+        for(List<String> list : listoflists){
+            if(list == null)
+                continue;
+            for(String s : list){
+                prettyByteCode.add(s);
+            }
+        }
+        prettyByteCode.add("}\n");
         return prettyByteCode;
     }
     /**

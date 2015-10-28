@@ -49,16 +49,22 @@ public class CodeCannibleGUI extends JFrame {
 		classTree = new JTree();
 		classTree.addTreeSelectionListener(new TreeSelectionListener() {
 			public void valueChanged(TreeSelectionEvent arg0) {
+				new Thread(new Runnable(){
+
+						public void run(){
+				System.out.println("You've selected a class!");
 				DefaultMutableTreeNode node = (DefaultMutableTreeNode)arg0.getPath().getLastPathComponent();
 				String name = (String)node.getUserObject();
 				if(!name.endsWith(".class"))
 					return;
+				System.out.println("Getting pretty byte code list");
 				List<String> byteCode = jar.getPrettyByteCodeList(name.split("\\.")[0]);
 				String finalCode = "";
 				for(String s : byteCode){
 					finalCode += s;
 				}
-				classDataTextArea.setText(finalCode);
+				System.out.println("Setting bytecode stuff!");
+				classDataTextArea.setText(finalCode);}}).run();
 			}
 		});
 		rootNode = new DefaultMutableTreeNode("Root node");
