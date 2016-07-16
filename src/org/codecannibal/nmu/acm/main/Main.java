@@ -15,7 +15,8 @@ public class Main {
         //String testFile = "C:\\Users\\Colton\\IdeaProjects\\CodeCannibal\\out\\artifacts\\testJar\\testJar.jar";
         String testFile = "C:\\Users\\Colton\\IdeaProjects\\Deobber\\gamepacks\\gamepack94.jar";
         JarOpener jarOpener = new JarOpener(testFile);
-        CodeCannibleGUI gui = new CodeCannibleGUI(jarOpener);
+        Cannibalize cannible = new Cannibalize(jarOpener);
+        CodeCannibleGUI gui = new CodeCannibleGUI(cannible);
         gui.setVisible(true);
 
         List<String> list = jarOpener.getAllClassNames();

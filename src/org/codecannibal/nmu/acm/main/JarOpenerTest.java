@@ -6,11 +6,11 @@ package org.codecannibal.nmu.acm.main;
 public class JarOpenerTest {
 
     public static void main(String[] args){
-        String testFile = "C:\\Users\\Colton\\IdeaProjects\\CodeCannibal\\out\\artifacts\\testJar\\testJar.jar";
-        JarOpener jarOpener = new JarOpener(testFile);
+        //String testFile = "C:\\Users\\Colton\\IdeaProjects\\CodeCannibal\\out\\artifacts\\testJar\\testJar.jar";
+        //JarOpener jarOpener = new JarOpener(testFile);
         //jarOpener.printClassByteCode("Opcodes");
-        jarOpener.printFileNames();
-        jarOpener.printClassNodeStuff();
+        //jarOpener.printFileNames();
+        //jarOpener.printClassNodeStuff();
         //byte[] clientBytes = jarOpener.getBytesForClassName("org/codecannibal/nmu/acm/main/JarOpenerTest");
         //jarOpener.printFileNames();
 //        System.out.println(jarOpener.getNextByte());

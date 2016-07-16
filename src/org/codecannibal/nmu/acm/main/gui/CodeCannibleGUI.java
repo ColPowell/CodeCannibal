@@ -1,5 +1,6 @@
 package org.codecannibal.nmu.acm.main.gui;
 
+import org.codecannibal.nmu.acm.main.Cannibalize;
 import org.codecannibal.nmu.acm.main.JarOpener;
 
 import java.awt.EventQueue;
@@ -26,13 +27,13 @@ public class CodeCannibleGUI extends JFrame {
     private DefaultTreeModel rootModel;
     private JScrollPane classDataScrollPane;
     private JTextArea classDataTextArea;
-	private JarOpener jar;
+	private Cannibalize cannible;
 
 	/**
 	 * Create the frame.
 	 */
-	public CodeCannibleGUI(JarOpener jar) {
-		this.jar = jar;
+	public CodeCannibleGUI(Cannibalize cannible) {
+		this.cannible = cannible;
 		init();
 	}
 	
@@ -58,7 +59,7 @@ public class CodeCannibleGUI extends JFrame {
 				if(!name.endsWith(".class"))
 					return;
 				System.out.println("Getting pretty byte code list");
-				List<String> byteCode = jar.getPrettyByteCodeList(name.split("\\.")[0]);
+				List<String> byteCode = cannible.getPrettyByteCodeList(name.split("\\.")[0]);
 				String finalCode = "";
 				for(String s : byteCode){
 					finalCode += s;

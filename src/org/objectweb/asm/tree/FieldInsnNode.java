@@ -29,6 +29,7 @@
  */
 package org.objectweb.asm.tree;
 
+import org.codecannibal.nmu.acm.main.Cannibalize;
 import org.codecannibal.nmu.acm.main.JarOpener;
 import org.objectweb.asm.MethodVisitor;
 
@@ -111,6 +112,13 @@ public class FieldInsnNode extends AbstractInsnNode {
 
     @Override
     public String toString(){
-        return JarOpener.opCodeMap.get(opcode) + " " + this.owner + "." + this.name+":" + desc;
+        return Cannibalize.opCodeMap.get(opcode) + " " + this.owner + "." + this.name+":" + desc;
+    }
+
+    public String toByteCode(){
+        return Cannibalize.opCodeMap.get(opcode) + " " + this.owner + "." + this.name+":" + desc;
+    }
+    public String toJavaCode(){
+        return Cannibalize.opCodeMap.get(opcode) + " " + this.owner + "." + this.name+":" + desc;
     }
 }
