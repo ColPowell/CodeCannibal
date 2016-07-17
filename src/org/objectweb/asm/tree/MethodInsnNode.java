@@ -32,6 +32,7 @@ package org.objectweb.asm.tree;
 import org.codecannibal.nmu.acm.main.JarOpener;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
+import org.objectweb.asm.util.Printer;
 
 import java.util.Map;
 
@@ -141,6 +142,6 @@ public class MethodInsnNode extends AbstractInsnNode {
 
     @Override
     public String toString(){
-        return JarOpener.opCodeMap.get(opcode) + " " + this.owner + " " + this.name + " " + this.desc;// + ":"+ this.index+":"+this.desc+":"+this.name+":"+this.owner;
+        return Printer.OPCODES[this.opcode] + " " + this.owner + " " + this.name + " " + this.desc;// + ":"+ this.index+":"+this.desc+":"+this.name+":"+this.owner;
     }
 }

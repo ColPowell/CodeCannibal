@@ -31,6 +31,7 @@ package org.objectweb.asm.tree;
 
 import org.codecannibal.nmu.acm.main.JarOpener;
 import org.objectweb.asm.MethodVisitor;
+import org.objectweb.asm.util.Printer;
 
 import java.util.Map;
 
@@ -89,6 +90,6 @@ public class InsnNode extends AbstractInsnNode {
 
     @Override
     public String toString(){
-        return JarOpener.opCodeMap.get(this.opcode);
+        return Printer.OPCODES[this.opcode];
     }
 }
