@@ -75,9 +75,8 @@ public class LabelNode extends AbstractInsnNode {
     public void resetLabel() {
         label = null;
     }
-
     @Override
-    public String toString(){
+    public String getPrettyByteCode(){
         return "L"+this.index+"{";
     }
 }

@@ -323,4 +323,12 @@ public abstract class AbstractInsnNode {
         }
         return this;
     }
+
+    public String getPrettyByteCode(){
+        return toString();
+    }
+
+    public String getPrettyJavaeCode(){
+        return toString();
+    }
 }

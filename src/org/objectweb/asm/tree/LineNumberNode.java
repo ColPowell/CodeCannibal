@@ -29,6 +29,7 @@
  */
 package org.objectweb.asm.tree;
 
+import org.codecannibal.nmu.acm.main.Cannibalize;
 import org.objectweb.asm.MethodVisitor;
 
 import java.util.Map;
@@ -83,7 +84,11 @@ public class LineNumberNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
+    public String getPrettyByteCode(){
+        return this.line+" "+ Cannibalize.opCodeMap.get(this.opcode)+" "+this.start.getPrettyByteCode();
+    }
+
+    public String getPrettyJavaCode(){
         return "";
     }
 }

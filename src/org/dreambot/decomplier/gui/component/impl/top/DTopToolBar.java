@@ -37,7 +37,7 @@ public class DTopToolBar<C extends Component> extends JMenuBar implements DCompo
 
     private JMenu getFileMenu() {
         JMenu menu = new JMenu("File");
-        final JFileChooser fc = new JFileChooser(".jar");
+        final JFileChooser fc = new JFileChooser(System.getProperty("user.home"));//".jar");
         JMenuItem open = new JMenuItem(new AbstractAction("Open") {
             @Override
             public void actionPerformed(ActionEvent e) {

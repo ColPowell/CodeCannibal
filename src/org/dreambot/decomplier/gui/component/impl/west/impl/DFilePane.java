@@ -1,7 +1,7 @@
 package org.dreambot.decomplier.gui.component.impl.west.impl;
 
 import org.codecannibal.nmu.acm.asm.block.impl.ClassBlock;
-import org.codecannibal.nmu.acm.asm.block.impl.MethodBlock;
+import org.codecannibal.nmu.acm.main.Cannibalize;
 import org.dreambot.decomplier.Decompiler;
 import org.dreambot.decomplier.gui.component.DComponent;
 import org.dreambot.decomplier.gui.component.util.JarTreeModel;
@@ -28,6 +28,7 @@ public class DFilePane<C extends Component> extends JPanel implements DComponent
     private JarTreeModel model;
     private TraceMethodVisitor mp;
     private Printer printer;
+	private Cannibalize cannibalize;
 
     public DFilePane(C owner) {
         this.owner = owner;
@@ -38,6 +39,7 @@ public class DFilePane<C extends Component> extends JPanel implements DComponent
         setBorder(BorderFactory.createLineBorder(getBackground().darker()));
         fileTree = new JTree(model);
         add(new JScrollPane(fileTree));
+		cannibalize = new Cannibalize(Decompiler.getOpener());
         fileTree.addTreeSelectionListener(e -> {
             String s = "";
             for(int i = 1; i < e.getPath().getPath().length; i++){
@@ -45,20 +47,27 @@ public class DFilePane<C extends Component> extends JPanel implements DComponent
             }
             ClassBlock classBlock = Decompiler.getOpener().getClassBlocks().get(s.replace(".class", ""));
             if(classBlock != null){
-                String scan = scanClass(classBlock);
+				System.out.println("The class: " +s.replace(".class", ""));
+				String scan = scanClass(s.replace(".class", ""));//classBlock);
                 Decompiler.getFrame().getContentPane().getCenterPane().getTextPane().setText(scan);
             }
         });
     }
 
-    private String scanClass(ClassBlock classNode) {
-        String byteCode = "";
+    private String scanClass(String classNode){//ClassBlock classNode) {
+		StringBuilder sb = new StringBuilder();
+		java.util.List<String> s = cannibalize.getPrettyByteCodeList(classNode);
+		for(String string : s){
+			sb.append(string);
+		}
+		return sb.toString();
+        /*String byteCode = "";
         for(MethodBlock o : classNode.getMethods()){
             MethodNode methodNode = o.getNode();
             byteCode += scanMethod(methodNode);
         }
 
-        return byteCode;
+        return byteCode;*/
     }
 
     private String scanMethod(MethodNode methodNode){

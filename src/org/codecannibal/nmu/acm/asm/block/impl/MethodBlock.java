@@ -2,6 +2,7 @@ package org.codecannibal.nmu.acm.asm.block.impl;
 
 import org.codecannibal.nmu.acm.asm.block.AbstractBlock;
 import org.objectweb.asm.tree.AbstractInsnNode;
+import org.objectweb.asm.tree.LocalVariableNode;
 import org.objectweb.asm.tree.MethodNode;
 
 import java.util.ArrayList;
@@ -57,42 +58,43 @@ public class MethodBlock implements AbstractBlock {
                 char c = desc.charAt(i);
                 switch(c){
                     case 'I':
-                        currParam = "final int"+arrays;
+                        currParam = "int"+arrays;
                         break;
                     case 'B':
-                        currParam = "final byte"+arrays;
+                        currParam = "byte"+arrays;
                         break;
                     case 'Z':
-                        currParam = "final boolean"+arrays;
+                        currParam = "boolean"+arrays;
                         break;
                     case 'J':
-                        currParam = "final long"+arrays;
+                        currParam = "long"+arrays;
                         break;
                     case 'C':
-                        currParam = "final char"+arrays;
+                        currParam = "char"+arrays;
                         break;
                     case 'S':
-                        currParam = "final short"+arrays;
+                        currParam = "short"+arrays;
                         break;
                     case 'F':
-                        currParam= "final float"+arrays;
+                        currParam= "float"+arrays;
                         break;
                     case 'D':
-                        currParam= "final double"+arrays;
+                        currParam= "double"+arrays;
                         break;
                     case 'L':
                         String tmp = desc.substring(i+1);
                         String myClass = tmp.split(";")[0];
-                        currParam="final " + myClass+arrays;
+                        myClass = myClass.replaceAll("/","\\.");
+                        currParam=myClass+arrays;
                         i+=myClass.length();
                         break;
                     case '[':
                         arrays+="[]";
                         break;
                 }
-                if(!currParam.equals("") && node != null && node.localVariables != null && node.localVariables.size() > varPlace) {
+                if(!currParam.equals("")){
                     currParam+=" ";
-                    currParam+=node.localVariables.get(varPlace).name;
+                    currParam+="var"+varPlace;
                     params.add(currParam);
                     varPlace++;
                     arrays = "";
@@ -107,6 +109,23 @@ public class MethodBlock implements AbstractBlock {
         if(params.length > 0){
             for(String s : params){
                 prettyParams+=s+", ";
+            }
+            prettyParams = prettyParams.substring(0,prettyParams.length()-2);
+        }
+        return prettyParams;
+    }
+
+    public String getPrettyJavaParameters(){
+        String[] params = getParameters();
+        String prettyParams = "";
+        if(params.length > 0){
+            for(String s : params){
+                if(s.contains("/")){
+                    String[] data = s.split("\\.");
+                    prettyParams+=data[data.length-1]+", ";
+                }
+                else
+                    prettyParams+=s+", ";
             }
             prettyParams = prettyParams.substring(0,prettyParams.length()-2);
         }

@@ -98,7 +98,7 @@ public class JumpInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
-        return Cannibalize.opCodeMap.get(this.opcode) + " " + this.label.index;
+    public String getPrettyByteCode(){
+        return Cannibalize.opCodeMap.get(this.opcode) + " L" + this.label.index;
     }
 }

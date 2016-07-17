@@ -211,7 +211,7 @@ public class FrameNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
-        return Cannibalize.opCodeMap.get(opcode) + ":" + this.index;
+    public String getPrettyByteCode(){
+        return "";
     }
 }

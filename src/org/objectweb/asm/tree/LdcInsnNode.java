@@ -78,8 +78,8 @@ public class LdcInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
-        return "ldc " + cst;
+    public String getPrettyByteCode(){
+        return "ldc " + getCSTVal();
     }
 
     private String getCSTVal(){

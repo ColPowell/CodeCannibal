@@ -29,6 +29,7 @@
  */
 package org.objectweb.asm.tree;
 
+import org.codecannibal.nmu.acm.main.Cannibalize;
 import org.codecannibal.nmu.acm.main.JarOpener;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.util.Printer;
@@ -89,7 +90,7 @@ public class InsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
-        return Printer.OPCODES[this.opcode];
+    public String getPrettyByteCode(){
+        return Cannibalize.opCodeMap.get(this.opcode);
     }
 }

@@ -80,5 +80,9 @@ public class MultiANewArrayInsnNode extends AbstractInsnNode {
     public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
         return new MultiANewArrayInsnNode(desc, dims).cloneAnnotations(this);
     }
+    @Override
+    public String getPrettyByteCode(){
+        return "";
+    }
 
 }

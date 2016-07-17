@@ -29,6 +29,7 @@
  */
 package org.objectweb.asm.tree;
 
+import org.codecannibal.nmu.acm.main.Cannibalize;
 import org.codecannibal.nmu.acm.main.JarOpener;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
@@ -140,8 +141,9 @@ public class MethodInsnNode extends AbstractInsnNode {
         return new MethodInsnNode(opcode, owner, name, desc, itf);
     }
 
+
     @Override
-    public String toString(){
-        return Printer.OPCODES[this.opcode] + " " + this.owner + " " + this.name + " " + this.desc;// + ":"+ this.index+":"+this.desc+":"+this.name+":"+this.owner;
+    public String getPrettyByteCode(){
+        return Cannibalize.opCodeMap.get(opcode) + " " + this.owner + " " + this.name + " (" + this.desc+");";// + ":"+ this.index+":"+this.desc+":"+this.name+":"+this.owner;
     }
 }

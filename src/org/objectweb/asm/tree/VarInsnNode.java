@@ -93,9 +93,8 @@ public class VarInsnNode extends AbstractInsnNode {
     public AbstractInsnNode clone(final Map<LabelNode, LabelNode> labels) {
         return new VarInsnNode(opcode, var).cloneAnnotations(this);
     }
-
     @Override
-    public String toString(){
-        return Cannibalize.opCodeMap.get(this.opcode) + var;//"var_"+ var + " " + this.opcode + " " + this.index;
+    public String getPrettyByteCode(){
+        return Cannibalize.opCodeMap.get(this.opcode) + var;
     }
 }

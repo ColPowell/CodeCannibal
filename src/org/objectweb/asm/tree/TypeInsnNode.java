@@ -92,7 +92,7 @@ public class TypeInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
+    public String getPrettyByteCode(){
         return Cannibalize.opCodeMap.get(opcode) + " " + desc;
     }
 }

@@ -89,7 +89,7 @@ public class IntInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
+    public String getPrettyByteCode(){
         return Cannibalize.opCodeMap.get(this.opcode) + " " + this.operand ;
     }
 }

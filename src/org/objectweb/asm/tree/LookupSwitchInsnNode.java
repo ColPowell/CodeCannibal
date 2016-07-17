@@ -115,4 +115,9 @@ public class LookupSwitchInsnNode extends AbstractInsnNode {
         clone.keys.addAll(keys);
         return clone.cloneAnnotations(this);
     }
+
+    @Override
+    public String getPrettyByteCode(){
+        return toString();
+    }
 }

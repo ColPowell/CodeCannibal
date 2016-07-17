@@ -111,11 +111,7 @@ public class FieldInsnNode extends AbstractInsnNode {
     }
 
     @Override
-    public String toString(){
-        return Cannibalize.opCodeMap.get(opcode) + " " + this.owner + "." + this.name+":" + desc;
-    }
-
-    public String toByteCode(){
+    public String getPrettyByteCode(){
         return Cannibalize.opCodeMap.get(opcode) + " " + this.owner + "." + this.name+":" + desc;
     }
     public String toJavaCode(){

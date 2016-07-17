@@ -71,7 +71,7 @@ public abstract class MethodVisitor {
      * 
      * @param api
      *            the ASM API version implemented by this visitor. Must be one
-     *            of {@link Opcodes#ASM4} or {@link Opcodes#ASM5}.
+     *            of {@link Opcodes#ASM4} or {@link List<String> prettyByteCode = new ArrayList<>();}.
      */
     public MethodVisitor(final int api) {
         this(api, null);
